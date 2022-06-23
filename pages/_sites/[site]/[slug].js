@@ -27,7 +27,7 @@ export default function Post({ stringifiedAdjacentPosts, stringifiedData }) {
     description: data.description,
     logo: '/logo.png',
     ogImage: data.image,
-    ogUrl: `https://${data.site?.subdomain}.vercel.pub/${data.slug}`,
+    ogUrl: `https://${data.site?.subdomain}.platform-cms.vercel.app/${data.slug}`,
     title: data.title
   };
   return (
@@ -50,8 +50,7 @@ export default function Post({ stringifiedAdjacentPosts, stringifiedData }) {
               : `https://github.com/${data.site?.user?.gh_username}`
           }
           rel="noreferrer"
-          target="_blank"
-        >
+          target="_blank">
           <div className="my-8">
             <div className="relative w-8 h-8 md:w-12 md:h-12 rounded-full overflow-hidden inline-block align-middle">
               {data.site?.user?.image ? (

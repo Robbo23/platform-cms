@@ -83,7 +83,7 @@ export default function SiteSettings() {
       try {
         const response = await fetch(`/api/domain/check?domain=${debouncedSubdomain}&subdomain=1`);
         const available = await response.json();
-        setSubdomainError(available ? null : `${debouncedSubdomain}.vercel.pub`);
+        setSubdomainError(available ? null : `${debouncedSubdomain}.platform-cms.vercel.app`);
       } catch (error) {
         console.error(error);
       }
@@ -179,7 +179,7 @@ export default function SiteSettings() {
                 value={data.subdomain || ''}
               />
               <div className="w-1/2 h-12 flex justify-center items-center font-cal rounded-r-lg border-l border-gray-600 bg-gray-100">
-                vercel.pub
+                platform-cms.vercel.app
               </div>
             </div>
             {subdomainError && (
@@ -198,8 +198,7 @@ export default function SiteSettings() {
                   e.preventDefault();
                   await handleCustomDomain();
                 }}
-                className="flex justify-start items-center space-x-3 max-w-lg"
-              >
+                className="flex justify-start items-center space-x-3 max-w-lg">
                 <div className="border border-gray-700 flex-auto rounded-lg overflow-hidden">
                   <input
                     autoComplete="off"
@@ -219,8 +218,7 @@ export default function SiteSettings() {
                 </div>
                 <button
                   type="submit"
-                  className="bg-black text-white border-black hover:text-black hover:bg-white px-5 py-3 w-28 font-cal border-solid border rounded-md focus:outline-none transition-all ease-in-out duration-150"
-                >
+                  className="bg-black text-white border-black hover:text-black hover:bg-white px-5 py-3 w-28 font-cal border-solid border rounded-md focus:outline-none transition-all ease-in-out duration-150">
                   {adding ? <LoadingDots /> : 'Add'}
                 </button>
               </form>
@@ -237,8 +235,7 @@ export default function SiteSettings() {
                   strokeLinejoin="round"
                   fill="none"
                   shapeRendering="geometricPrecision"
-                  style={{ color: '#f44336' }}
-                >
+                  style={{ color: '#f44336' }}>
                   <circle cx="12" cy="12" r="10" fill="white" />
                   <path d="M12 8v4" stroke="#f44336" />
                   <path d="M12 16h.01" stroke="#f44336" />
@@ -263,8 +260,7 @@ export default function SiteSettings() {
                             }
                           }
                         );
-                      }}
-                    >
+                      }}>
                       <u>Click here to request access.</u>
                     </button>
                   </p>
@@ -282,20 +278,17 @@ export default function SiteSettings() {
             <div
               className={`${
                 data.image ? '' : 'animate-pulse bg-gray-300 h-150'
-              } relative mt-5 w-full border-2 border-gray-800 border-dashed rounded-md`}
-            >
+              } relative mt-5 w-full border-2 border-gray-800 border-dashed rounded-md`}>
               <CloudinaryUploadWidget callback={(e) => saveImage(e, data, setData)}>
                 {({ open }) => (
                   <button
                     onClick={open}
-                    className="absolute w-full h-full rounded-md bg-gray-200 z-10 flex flex-col justify-center items-center opacity-0 hover:opacity-100 transition-all ease-linear duration-200"
-                  >
+                    className="absolute w-full h-full rounded-md bg-gray-200 z-10 flex flex-col justify-center items-center opacity-0 hover:opacity-100 transition-all ease-linear duration-200">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="100"
                       height="100"
-                      viewBox="0 0 24 24"
-                    >
+                      viewBox="0 0 24 24">
                       <path d="M16 16h-3v5h-2v-5h-3l4-4 4 4zm3.479-5.908c-.212-3.951-3.473-7.092-7.479-7.092s-7.267 3.141-7.479 7.092c-2.57.463-4.521 2.706-4.521 5.408 0 3.037 2.463 5.5 5.5 5.5h3.5v-2h-3.5c-1.93 0-3.5-1.57-3.5-3.5 0-2.797 2.479-3.833 4.433-3.72-.167-4.218 2.208-6.78 5.567-6.78 3.453 0 5.891 2.797 5.567 6.78 1.745-.046 4.433.751 4.433 3.72 0 1.93-1.57 3.5-3.5 3.5h-3.5v2h3.5c3.037 0 5.5-2.463 5.5-5.5 0-2.702-1.951-4.945-4.521-5.408z" />
                     </svg>
                     <p>Upload another image</p>
@@ -328,8 +321,7 @@ export default function SiteSettings() {
                 onClick={() => {
                   setShowDeleteModal(true);
                 }}
-                className="bg-red-500 text-white border-red-500 hover:text-red-500 hover:bg-white px-5 py-3 max-w-max font-cal border-solid border rounded-md focus:outline-none transition-all ease-in-out duration-150"
-              >
+                className="bg-red-500 text-white border-red-500 hover:text-red-500 hover:bg-white px-5 py-3 max-w-max font-cal border-solid border rounded-md focus:outline-none transition-all ease-in-out duration-150">
                 Delete Site
               </button>
             </div>
@@ -342,8 +334,7 @@ export default function SiteSettings() {
             event.preventDefault();
             await deleteSite(siteId);
           }}
-          className="inline-block w-full max-w-md pt-8 overflow-hidden text-center align-middle transition-all bg-white shadow-xl rounded-lg"
-        >
+          className="inline-block w-full max-w-md pt-8 overflow-hidden text-center align-middle transition-all bg-white shadow-xl rounded-lg">
           <h2 className="font-cal text-2xl mb-6">Delete Site</h2>
           <div className="grid gap-y-5 w-5/6 mx-auto">
             <p className="text-gray-600 mb-3">
@@ -364,8 +355,7 @@ export default function SiteSettings() {
             <button
               type="button"
               className="w-full px-5 py-5 text-sm text-gray-400 hover:text-black border-t border-gray-300 rounded-bl focus:outline-none focus:ring-0 transition-all ease-in-out duration-150"
-              onClick={() => setShowDeleteModal(false)}
-            >
+              onClick={() => setShowDeleteModal(false)}>
               CANCEL
             </button>
 
@@ -376,8 +366,7 @@ export default function SiteSettings() {
                 deletingSite
                   ? 'cursor-not-allowed text-gray-400 bg-gray-50'
                   : 'bg-white text-gray-600 hover:text-black'
-              } w-full px-5 py-5 text-sm border-t border-l border-gray-300 rounded-br focus:outline-none focus:ring-0 transition-all ease-in-out duration-150`}
-            >
+              } w-full px-5 py-5 text-sm border-t border-l border-gray-300 rounded-br focus:outline-none focus:ring-0 transition-all ease-in-out duration-150`}>
               {deletingSite ? <LoadingDots /> : 'DELETE SITE'}
             </button>
           </div>
@@ -395,8 +384,7 @@ export default function SiteSettings() {
               saving || subdomainError
                 ? 'cursor-not-allowed bg-gray-300 border-gray-300'
                 : 'bg-black hover:bg-white hover:text-black border-black'
-            } mx-2 rounded-md w-36 h-12 text-lg text-white border-2 focus:outline-none transition-all ease-in-out duration-150`}
-          >
+            } mx-2 rounded-md w-36 h-12 text-lg text-white border-2 focus:outline-none transition-all ease-in-out duration-150`}>
             {saving ? <LoadingDots /> : 'Save Changes'}
           </button>
         </div>

@@ -4,7 +4,7 @@ import 'styles/globals.css';
 
 export default function App({ Component, pageProps: { session, ...pageProps } }) {
   return (
-    <PlausibleProvider domain="demo.vercel.pub">
+    <PlausibleProvider domain="platform-cms.vercel.app">
       <SessionProvider session={session}>
         <Component {...pageProps} />
       </SessionProvider>

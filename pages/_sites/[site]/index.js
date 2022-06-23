@@ -15,7 +15,9 @@ export default function Index({ stringifiedData }) {
     description: data.description,
     logo: '/logo.png',
     ogImage: data.image,
-    ogUrl: data.customDomain ? data.customDomain : `https://${data.subdomain}.vercel.pub`
+    ogUrl: data.customDomain
+      ? data.customDomain
+      : `https://${data.subdomain}.platform-cms.vercel.app`
   };
   return (
     <Layout meta={meta} subdomain={data.subdomain ?? undefined}>
