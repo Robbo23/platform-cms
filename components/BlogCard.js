@@ -23,6 +23,7 @@ export default function BlogCard({ data }) {
               ?
             </div>
           )}
+
           <div className="h-36 border-t border-gray-200 py-8 px-5">
             <h3 className="font-cal text-xl tracking-wide">{data.title}</h3>
             <p className="text-md my-2 truncate italic text-gray-600">{data.description}</p>
