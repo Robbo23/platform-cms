@@ -3,12 +3,11 @@ import { Fragment } from 'react';
 export default function Modal({ children, showModal, setShowModal }) {
   return (
     <>
-      <Transition appear show={showModal} as={Fragment}>
+      <Transition appear unmount={false} show={showModal} as="header">
         <Dialog
           as="div"
           className="fixed inset-0 z-40 overflow-y-auto"
-          onClose={() => setShowModal(false)}
-        >
+          onClose={() => setShowModal(false)}>
           <div className="min-h-screen px-4 text-center">
             <Transition.Child
               as={Fragment}
@@ -17,8 +16,7 @@ export default function Modal({ children, showModal, setShowModal }) {
               enterTo="opacity-100"
               leave="ease-in duration-200"
               leaveFrom="opacity-100"
-              leaveTo="opacity-0"
-            >
+              leaveTo="opacity-0">
               <Dialog.Overlay className="fixed inset-0 bg-gray-500 bg-opacity-75" />
             </Transition.Child>
 
@@ -32,8 +30,7 @@ export default function Modal({ children, showModal, setShowModal }) {
               enterTo="opacity-100 scale-100"
               leave="ease-in duration-200"
               leaveFrom="opacity-100 scale-100"
-              leaveTo="opacity-0 scale-95"
-            >
+              leaveTo="opacity-0 scale-95">
               {children}
             </Transition.Child>
           </div>

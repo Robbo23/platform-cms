@@ -35,9 +35,11 @@ export default function AppIndex() {
     checkSubDomain();
   }, [debouncedSubdomain]);
   const router = useRouter();
-  const { data: session } = useSession();
+  // const { data: session } = useSession();
+  const { session } = useSession();
   const sessionId = session?.user?.id;
-  const { data: sites } = useSWR(sessionId && `/api/site`, fetcher);
+  // const { data: sites } = useSWR(sessionId && `/api/site`, fetcher);
+  const { sites } = useSWR(sessionId && `/api/site`, fetcher);
 
   async function createSite(e) {
     const res = await fetch('/api/site', {
@@ -54,7 +56,7 @@ export default function AppIndex() {
     });
     if (res.ok) {
       const data = await res.json();
-      router.push(`/site/${data.siteId}`);
+      await router.push(`/site/${data.siteId}`);
     }
   }
 
@@ -67,13 +69,13 @@ export default function AppIndex() {
             setCreatingSite(true);
             createSite(event);
           }}
-          className="inline-block w-full max-w-md pt-8 overflow-hidden text-center align-middle transition-all bg-white shadow-xl rounded-lg">
-          <h2 className="font-cal text-2xl mb-6">Create a New Site</h2>
-          <div className="grid gap-y-5 w-5/6 mx-auto">
-            <div className="border border-gray-700 rounded-lg flex flex-start items-center">
+          className="inline-block w-full max-w-md overflow-hidden rounded-lg bg-white pt-8 text-center align-middle shadow-xl transition-all">
+          <h2 className="mb-6 font-cal text-2xl">Create a New Site</h2>
+          <div className="mx-auto grid w-5/6 gap-y-5">
+            <div className="flex-start flex items-center rounded-lg border border-gray-700">
               <span className="pl-5 pr-1">📌</span>
               <input
-                className="w-full px-5 py-3 text-gray-700 bg-white border-none focus:outline-none focus:ring-0 rounded-none rounded-r-lg placeholder-gray-400"
+                className="w-full rounded-none rounded-r-lg border-none bg-white px-5 py-3 text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-0"
                 name="name"
                 required
                 placeholder="Site Name"
@@ -81,17 +83,17 @@ export default function AppIndex() {
                 type="text"
               />
             </div>
-            <div className="border border-gray-700 rounded-lg flex flex-start items-center">
+            <div className="flex-start flex items-center rounded-lg border border-gray-700">
               <span className="pl-5 pr-1">🪧</span>
               <input
-                className="w-full px-5 py-3 text-gray-700 bg-white border-none focus:outline-none focus:ring-0 rounded-none rounded-l-lg placeholder-gray-400"
+                className="w-full rounded-none rounded-l-lg border-none bg-white px-5 py-3 text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-0"
                 name="subdomain"
                 onInput={() => setSubdomain(siteSubdomainRef.current.value)}
                 placeholder="Subdomain"
                 ref={siteSubdomainRef}
                 type="text"
               />
-              <span className="px-5 bg-gray-100 h-full flex items-center rounded-r-lg border-l border-gray-600">
+              <span className="flex h-full items-center rounded-r-lg border-l border-gray-600 bg-gray-100 px-5">
                 .platform-cms.vercel.app
               </span>
             </div>
@@ -100,10 +102,10 @@ export default function AppIndex() {
                 <b>{error}</b> is not available. Please choose another subdomain.
               </p>
             )}
-            <div className="border border-gray-700 rounded-lg flex flex-start items-top">
-              <span className="pl-5 pr-1 mt-3">✍️</span>
+            <div className="flex-start items-top flex rounded-lg border border-gray-700">
+              <span className="mt-3 pl-5 pr-1">✍️</span>
               <textarea
-                className="w-full px-5 py-3 text-gray-700 bg-white border-none focus:outline-none focus:ring-0 rounded-none rounded-r-lg placeholder-gray-400"
+                className="w-full rounded-none rounded-r-lg border-none bg-white px-5 py-3 text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-0"
                 name="description"
                 placeholder="Description"
                 ref={siteDescriptionRef}
@@ -112,10 +114,10 @@ export default function AppIndex() {
               />
             </div>
           </div>
-          <div className="flex justify-between items-center mt-10 w-full">
+          <div className="mt-10 flex w-full items-center justify-between">
             <button
               type="button"
-              className="w-full px-5 py-5 text-sm text-gray-600 hover:text-black border-t border-gray-300 rounded-bl focus:outline-none focus:ring-0 transition-all ease-in-out duration-150"
+              className="w-full rounded-bl border-t border-gray-300 px-5 py-5 text-sm text-gray-600 transition-all duration-150 ease-in-out hover:text-black focus:outline-none focus:ring-0"
               onClick={() => {
                 setError(null);
                 setShowModal(false);
@@ -128,21 +130,21 @@ export default function AppIndex() {
               disabled={creatingSite || error !== null}
               className={`${
                 creatingSite || error
-                  ? 'cursor-not-allowed text-gray-400 bg-gray-50'
+                  ? 'cursor-not-allowed bg-gray-50 text-gray-400'
                   : 'bg-white text-gray-600 hover:text-black'
-              } w-full px-5 py-5 text-sm border-t border-l border-gray-300 rounded-br focus:outline-none focus:ring-0 transition-all ease-in-out duration-150`}>
+              } w-full rounded-br border-t border-l border-gray-300 px-5 py-5 text-sm transition-all duration-150 ease-in-out focus:outline-none focus:ring-0`}>
               {creatingSite ? <LoadingDots /> : 'CREATE SITE'}
             </button>
           </div>
         </form>
       </Modal>
 
-      <div className="py-20 max-w-screen-xl mx-auto px-10 sm:px-20">
-        <div className="flex flex-col sm:flex-row space-y-5 sm:space-y-0 justify-between items-center">
+      <div className="mx-auto max-w-screen-xl py-20 px-10 sm:px-20">
+        <div className="flex flex-col items-center justify-between space-y-5 sm:flex-row sm:space-y-0">
           <h1 className="font-cal text-5xl">My Sites</h1>
           <button
             onClick={() => setShowModal(true)}
-            className="font-cal text-lg w-3/4 sm:w-40 tracking-wide text-white bg-black border-black border-2 px-5 py-3 hover:bg-white hover:text-black transition-all ease-in-out duration-150">
+            className="w-3/4 border-2 border-black bg-black px-5 py-3 font-cal text-lg tracking-wide text-white transition-all duration-150 ease-in-out hover:bg-white hover:text-black sm:w-40">
             New Site <span className="ml-2">＋</span>
           </button>
         </div>
@@ -152,8 +154,8 @@ export default function AppIndex() {
               sites.map((site) => (
                 <Link href={`/site/${site.id}`} key={site.id}>
                   <a>
-                    <div className="flex flex-col md:flex-row md:h-60 rounded-lg overflow-hidden border border-gray-200">
-                      <div className="relative w-full h-60 md:h-auto md:w-1/3 md:flex-none">
+                    <div className="flex flex-col overflow-hidden rounded-lg border border-gray-200 md:h-60 md:flex-row">
+                      <div className="relative h-60 w-full md:h-auto md:w-1/3 md:flex-none">
                         {site.image ? (
                           <BlurImage
                             src={site.image}
@@ -162,16 +164,16 @@ export default function AppIndex() {
                             alt={site.name ?? 'Site thumbnail'}
                           />
                         ) : (
-                          <div className="absolute flex items-center justify-center w-full h-full bg-gray-100 text-gray-500 text-4xl select-none">
+                          <div className="absolute flex h-full w-full select-none items-center justify-center bg-gray-100 text-4xl text-gray-500">
                             ?
                           </div>
                         )}
                       </div>
                       <div className="relative p-10">
                         <h2 className="font-cal text-3xl">{site.name}</h2>
-                        <p className="text-base my-5 line-clamp-3">{site.description}</p>
+                        <p className="my-5 text-base line-clamp-3">{site.description}</p>
                         <a
-                          className="font-cal px-3 py-1 tracking-wide rounded bg-gray-200 text-gray-600 absolute bottom-5 left-10 whitespace-nowrap"
+                          className="absolute bottom-5 left-10 whitespace-nowrap rounded bg-gray-200 px-3 py-1 font-cal tracking-wide text-gray-600"
                           href={`https://${site.subdomain}.platform-cms.vercel.app`}
                           onClick={(e) => e.stopPropagation()}
                           rel="noreferrer"
@@ -185,17 +187,17 @@ export default function AppIndex() {
               ))
             ) : (
               <>
-                <div className="flex flex-col md:flex-row md:h-60 rounded-lg overflow-hidden border border-gray-200">
-                  <div className="relative w-full h-60 md:h-auto md:w-1/3 md:flex-none bg-gray-300" />
-                  <div className="relative p-10 grid gap-5">
-                    <div className="w-28 h-10 rounded-md bg-gray-300" />
-                    <div className="w-48 h-6 rounded-md bg-gray-300" />
-                    <div className="w-48 h-6 rounded-md bg-gray-300" />
-                    <div className="w-48 h-6 rounded-md bg-gray-300" />
+                <div className="flex flex-col overflow-hidden rounded-lg border border-gray-200 md:h-60 md:flex-row">
+                  <div className="relative h-60 w-full bg-gray-300 md:h-auto md:w-1/3 md:flex-none" />
+                  <div className="relative grid gap-5 p-10">
+                    <div className="h-10 w-28 rounded-md bg-gray-300" />
+                    <div className="h-6 w-48 rounded-md bg-gray-300" />
+                    <div className="h-6 w-48 rounded-md bg-gray-300" />
+                    <div className="h-6 w-48 rounded-md bg-gray-300" />
                   </div>
                 </div>
                 <div className="text-center">
-                  <p className="text-2xl font-cal text-gray-600">
+                  <p className="font-cal text-2xl text-gray-600">
                     No sites yet. Click &quot;New Site&quot; to create one.
                   </p>
                 </div>
@@ -205,13 +207,13 @@ export default function AppIndex() {
             [0, 1].map((i) => (
               <div
                 key={i}
-                className="flex flex-col md:flex-row md:h-60 rounded-lg overflow-hidden border border-gray-200">
-                <div className="relative w-full h-60 md:h-auto md:w-1/3 md:flex-none bg-gray-300 animate-pulse" />
-                <div className="relative p-10 grid gap-5">
-                  <div className="w-28 h-10 rounded-md bg-gray-300 animate-pulse" />
-                  <div className="w-48 h-6 rounded-md bg-gray-300 animate-pulse" />
-                  <div className="w-48 h-6 rounded-md bg-gray-300 animate-pulse" />
-                  <div className="w-48 h-6 rounded-md bg-gray-300 animate-pulse" />
+                className="flex flex-col overflow-hidden rounded-lg border border-gray-200 md:h-60 md:flex-row">
+                <div className="relative h-60 w-full animate-pulse bg-gray-300 md:h-auto md:w-1/3 md:flex-none" />
+                <div className="relative grid gap-5 p-10">
+                  <div className="h-10 w-28 animate-pulse rounded-md bg-gray-300" />
+                  <div className="h-6 w-48 animate-pulse rounded-md bg-gray-300" />
+                  <div className="h-6 w-48 animate-pulse rounded-md bg-gray-300" />
+                  <div className="h-6 w-48 animate-pulse rounded-md bg-gray-300" />
                 </div>
               </div>
             ))

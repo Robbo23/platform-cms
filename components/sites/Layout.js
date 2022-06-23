@@ -5,14 +5,18 @@ import { useState, useEffect, useCallback } from 'react';
 import Cookies from 'js-cookie';
 export default function Layout({ meta, children, subdomain }) {
   const [scrolled, setScrolled] = useState(false);
+
   const onScroll = useCallback(() => {
     setScrolled(window.pageYOffset > 20);
   }, []);
+
   useEffect(() => {
     window.addEventListener('scroll', onScroll);
     return () => window.removeEventListener('scroll', onScroll);
   }, [onScroll]);
+
   const [closeModal, setCloseModal] = useState(!!Cookies.get('closeModal'));
+
   useEffect(() => {
     if (closeModal) {
       Cookies.set('closeModal', 'true');
@@ -20,6 +24,7 @@ export default function Layout({ meta, children, subdomain }) {
       Cookies.remove('closeModal');
     }
   }, [closeModal]);
+
   return (
     <div>
       <Head>

@@ -1,6 +1,7 @@
 import cn from 'clsx';
 import Image from 'next/image';
 import { useState } from 'react';
+
 export default function BlurImage(props) {
   const [isLoading, setLoading] = useState(true);
   return (
@@ -10,7 +11,7 @@ export default function BlurImage(props) {
       className={cn(
         props.className,
         'duration-700 ease-in-out',
-        isLoading ? 'grayscale blur-2xl scale-110' : 'grayscale-0 blur-0 scale-100'
+        isLoading ? 'scale-110 blur-2xl grayscale' : 'scale-100 blur-0 grayscale-0'
       )}
       onLoadingComplete={() => setLoading(false)}
     />

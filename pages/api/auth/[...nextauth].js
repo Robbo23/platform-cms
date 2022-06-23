@@ -1,4 +1,5 @@
 import NextAuth from 'next-auth';
+import Email from 'next-auth/providers/email';
 import GitHubProvider from 'next-auth/providers/github';
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
 import prisma from 'lib/prisma';
@@ -6,6 +7,7 @@ if (!process.env.GITHUB_ID || !process.env.GITHUB_SECRET)
   throw new Error('Failed to initialize Github authentication');
 export const authOptions = {
   providers: [
+    Email({}),
     GitHubProvider({
       clientId: process.env.GITHUB_ID,
       clientSecret: process.env.GITHUB_SECRET,
@@ -30,6 +32,7 @@ export const authOptions = {
   callbacks: {
     session: ({ session, user }) => ({
       ...session,
+
       user: {
         ...session.user,
         id: user.id,

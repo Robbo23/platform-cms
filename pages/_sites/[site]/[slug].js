@@ -170,11 +170,13 @@ export const getStaticProps = async ({ params }) => {
   let filter = {
     subdomain: site
   };
+
   if (site.includes('.')) {
     filter = {
       customDomain: site
     };
   }
+
   const data = await prisma.post.findFirst({
     where: {
       site: {
