@@ -1,0 +1,12 @@
+@import url('public/fonts/stylesheet.css');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+  .overflow-hidden {
+    mask-image: radial-gradient(white, black);
+    -webkit-mask-image: -wekbit-radial-gradient(white, black);
+  }
+}
