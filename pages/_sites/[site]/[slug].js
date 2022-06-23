@@ -1,17 +1,18 @@
-import remarkMdx from 'remark-mdx';
-import { MDXRemote } from 'next-mdx-remote';
-import { remark } from 'remark';
-import { serialize } from 'next-mdx-remote/serialize';
-import { useRouter } from 'next/router';
 import BlogCard from 'components/BlogCard';
 import BlurImage from 'components/BlurImage';
 import Date from 'components/Date';
 import Examples from 'components/mdx/Examples';
+import Tweet from 'components/mdx/Tweet';
 import Layout from 'components/sites/Layout';
 import Loader from 'components/sites/Loader';
 import prisma from 'lib/prisma';
-import Tweet from 'components/mdx/Tweet';
-import { replaceExamples, replaceLinks, replaceTweets } from 'lib/remark-plugins';
+import { replaceLinks } from 'lib/remark-plugins';
+import { MDXRemote } from 'next-mdx-remote';
+import { serialize } from 'next-mdx-remote/serialize';
+import { useRouter } from 'next/router';
+import { remark } from 'remark';
+import remarkMdx from 'remark-mdx';
+
 const components = {
   a: replaceLinks,
   BlurImage,
@@ -116,11 +117,11 @@ export default function Post({ stringifiedAdjacentPosts, stringifiedData }) {
 export const getStaticPaths = async () => {
   const posts = await prisma.post.findMany({
     where: {
-      published: true,
+      published: true
       // you can remove this if you want to generate all sites at build time
-      site: {
-        subdomain: 'demo'
-      }
+      // site: {
+      //   subdomain: 'demo'
+      // }
     },
     select: {
       slug: true,
@@ -162,6 +163,7 @@ export const getStaticPaths = async () => {
     fallback: true
   };
 };
+
 export const getStaticProps = async ({ params }) => {
   if (!params) throw new Error('No path parameters found');
   const { site, slug } = params;
@@ -219,7 +221,7 @@ export const getStaticProps = async ({ params }) => {
       }),
       stringifiedAdjacentPosts: JSON.stringify(adjacentPosts)
     },
-    revalidate: 3600
+    revalidate: 20
   };
 };
 async function getMdxSource(postContents) {
@@ -228,13 +230,12 @@ async function getMdxSource(postContents) {
     // Native remark plugin that parses markdown into MDX
     .use(remarkMdx)
     // Replaces tweets with static <Tweet /> component
-    .use(replaceTweets)
+    // .use(replaceTweets)
     // Replaces examples with <Example /> component (only for demo.vercel.pub)
-    .use(() => replaceExamples(prisma))
+    // .use(() => replaceExamples(prisma))
     .process(postContents);
   // Convert converted html to string format
   const contentHtml = String(processedContent);
   // Serialize the content string into MDX
-  const mdxSource = await serialize(contentHtml);
-  return mdxSource;
+  return await serialize(contentHtml);
 }

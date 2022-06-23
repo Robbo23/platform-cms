@@ -53,7 +53,7 @@ export default function SiteSettings() {
       });
       if (response.ok) {
         setSaving(false);
-        mutate(`/api/site?siteId=${siteId}`);
+        await mutate(`/api/site?siteId=${siteId}`);
         toast.success(`Changes Saved`);
       }
     } catch (error) {
