@@ -39,11 +39,14 @@ export default function AppIndex() {
   }, [debouncedSubdomain]);
 
   const router = useRouter();
-  const { data: session } = useSession();
+  const { status, data: session } = useSession();
   // const { session } = useSession();
+
+  console.log('status', status, 'session ', session);
   const sessionId = session?.user.id;
-  const { data: sites } = useSWR(sessionId && `/api/site`, fetcher);
+  const { isValidating, data: sites } = useSWR(sessionId && `/api/site`, fetcher);
   // const { sites } = useSWR(sessionId && `/api/site`, fetcher);
+  console.log('is validating ', isValidating, 'datasites ', sites);
 
   async function createSite(e) {
     const res = await fetch('/api/site', {
