@@ -63,7 +63,7 @@ export default function AppIndex() {
     });
     if (res.ok) {
       const data = await res.json();
-      router.push(`/site/${data.siteId}`);
+      await router.push(`/site/${data.siteId}`);
     }
   }
 
