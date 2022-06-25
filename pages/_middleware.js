@@ -24,7 +24,7 @@ export default function middleware(req) {
    still need to add "*.platformize.vercel.app" as a wildcard domain on your Vercel dashboard. */
   const currentHost =
     process.env.NODE_ENV === 'production' && process.env.VERCEL === '1'
-      ? hostname.replace(`.platform-cms.vercel.app`, '').replace(`.platformize.vercel.app`, '')
+      ? hostname.replace(`.platform-cms.vercel.app`, '')
       : hostname.replace(`.localhost:3000`, '');
   if (pathname.startsWith(`/_sites`))
     return new Response(null, {
@@ -42,7 +42,7 @@ export default function middleware(req) {
       url.pathname = `/app${pathname}`;
       return NextResponse.rewrite(url);
     }
-    if (hostname === 'localhost:3000' || hostname === 'platformize.vercel.app') {
+    if (hostname === 'localhost:3000' || hostname === 'platform-cms.vercel.app') {
       url.pathname = `/home${pathname}`;
       return NextResponse.rewrite(url);
     }
