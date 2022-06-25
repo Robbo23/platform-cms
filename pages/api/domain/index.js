@@ -1,11 +1,10 @@
 import { createDomain, deleteDomain } from 'lib/api';
-import { getServerSession } from 'next-auth/next';
-import { authOptions } from '../auth/[...nextauth]';
+import { unstable_getServerSession } from 'next-auth/next';
+import { authOptions } from 'pages/api/auth/[...nextauth]';
 
 export default async function domain(req, res) {
-  const session = await getServerSession({ req, res }, authOptions);
+  const session = await unstable_getServerSession(req, res, authOptions);
   if (!session) return res.status(401).end();
-
   switch (req.method) {
     case 'POST':
       return createDomain(req, res);

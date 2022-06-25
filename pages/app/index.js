@@ -14,11 +14,14 @@ export default function AppIndex() {
   const [showModal, setShowModal] = useState(false);
   const [creatingSite, setCreatingSite] = useState(false);
   const [subdomain, setSubdomain] = useState('');
-  const [debouncedSubdomain] = useDebounce(subdomain, 1500);
   const [error, setError] = useState(null);
+
+  const [debouncedSubdomain] = useDebounce(subdomain, 1500);
+
   const siteNameRef = useRef(null);
   const siteSubdomainRef = useRef(null);
   const siteDescriptionRef = useRef(null);
+
   useEffect(() => {
     async function checkSubDomain() {
       if (debouncedSubdomain.length > 0) {
@@ -34,12 +37,13 @@ export default function AppIndex() {
 
     checkSubDomain();
   }, [debouncedSubdomain]);
+
   const router = useRouter();
-  // const { data: session } = useSession();
-  const { session } = useSession();
-  const sessionId = session?.user?.id;
-  // const { data: sites } = useSWR(sessionId && `/api/site`, fetcher);
-  const { sites } = useSWR(sessionId && `/api/site`, fetcher);
+  const { data: session } = useSession();
+  // const { session } = useSession();
+  const sessionId = session?.user.id;
+  const { data: sites } = useSWR(sessionId && `/api/site`, fetcher);
+  // const { sites } = useSWR(sessionId && `/api/site`, fetcher);
 
   async function createSite(e) {
     const res = await fetch('/api/site', {
@@ -56,7 +60,7 @@ export default function AppIndex() {
     });
     if (res.ok) {
       const data = await res.json();
-      await router.push(`/site/${data.siteId}`);
+      router.push(`/site/${data.siteId}`);
     }
   }
 

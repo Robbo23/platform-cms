@@ -1,9 +1,10 @@
 import { Dialog, Transition } from '@headlessui/react';
 import { Fragment } from 'react';
+
 export default function Modal({ children, showModal, setShowModal }) {
   return (
     <>
-      <Transition appear unmount={false} show={showModal} as="header">
+      <Transition appear show={showModal} as={Fragment}>
         <Dialog
           as="div"
           className="fixed inset-0 z-40 overflow-y-auto"
