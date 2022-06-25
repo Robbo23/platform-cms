@@ -42,11 +42,7 @@ export default function middleware(req) {
       url.pathname = `/app${pathname}`;
       return NextResponse.rewrite(url);
     }
-    if (
-      hostname === 'localhost:3000' ||
-      hostname === 'platformize.vercel.app' ||
-      hostname === 'platform-cms.vercel.app'
-    ) {
+    if (hostname === 'localhost:3000' || hostname === 'platformize.vercel.app') {
       url.pathname = `/home${pathname}`;
       return NextResponse.rewrite(url);
     }

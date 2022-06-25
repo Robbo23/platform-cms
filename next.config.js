@@ -11,5 +11,5 @@ module.exports = {
     ]
   },
   reactStrictMode: true,
-  swcMinify: true // Required to fix: https://nextjs.org/docs/messages/failed-loading-swc
+  swcMinify: false // Required to fix: https://nextjs.org/docs/messages/failed-loading-swc
 };
