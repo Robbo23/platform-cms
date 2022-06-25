@@ -5,6 +5,7 @@ export default async function post(req, res) {
     res.setHeader('Allow', ['GET']);
     return res.status(405).end(`Method ${req.method} Not Allowed`);
   }
+
   const { domain, subdomain = false } = req.query;
   if (Array.isArray(domain))
     return res.status(400).end('Bad request. domain parameter cannot be an array.');
